@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Данила Петров](https://up.htmlacademy.ru/javascript-individual/1/user/2462003).
-* Наставник: `Неизвестно`.
+* Наставник: [Мария Филиппова](https://htmlacademy.ru/profile/wonderjs).
 
 ---
 
