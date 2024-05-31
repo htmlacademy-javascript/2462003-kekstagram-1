@@ -17,15 +17,31 @@
 //  }
 
 function isPalindrome (string) {
- const formattedString = string
-  .toLowerCase()
-  .replaceAll(' ', '');
- const reversedString = formattedString
-  .split('')
-  .reverse()
-  .join('');
- return formattedString === reversedString;
+  const formattedString = string
+    .toLowerCase()
+    .replaceAll(' ', '');
+  const reversedString = formattedString
+    .split('')
+    .reverse()
+    .join('');
+  return formattedString === reversedString;
 }
 
-console.log(isPalindrome('Лёша на полке клопа нашёл '))
+// console.log(isPalindrome('Лёша на полке клопа нашёл '))
+
+
+function getNumber (string) {
+  const number = Math.abs(string);
+  if (!isNaN(number)) {
+    return number;
+  }
+  const filter = string.match(/[0-9]/gi);
+  if (filter === null) {
+    return NaN;
+  } const result = +filter.join('');
+  return result;
+
+
+}
+console.log(getNumber('wqe21'))
 
