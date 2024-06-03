@@ -1,4 +1,4 @@
-function isPalindrome (string) {
+const isPalindrome = (string) => {
   const formattedString = string
     .toLowerCase()
     .replaceAll(' ', '');
@@ -7,39 +7,49 @@ function isPalindrome (string) {
     .reverse()
     .join('');
   return formattedString === reversedString;
-}
+};
 
 isPalindrome('Лёша на полке клопа нашёл ');
 
-function getNumber (i) {
+const getNumber = (i) => {
   const string = String(i);
   const filter = string.match(/[0-9]/gi);
   if (filter === null) {
     return NaN;
-  } const result = +filter.join('');
+  }
+  const result = +filter.join('');
   return result;
-}
+};
 
 getNumber('1.5');
 
-function addSymbol(initial, length, add) {
-  if (length - initial.length - add.length === 1) {
-    const newString = initial.padStart(length - initial.length, add);
-    const cutString = add.slice(0, length - add.length - 1);
+// const addSymbol = (initial, length, add) => {
+//   if (length - initial.length - add.length === 1) {
+//     const newString = initial.padStart(length - initial.length, add);
+//     const cutString = add.slice(0, length - add.length - 1);
+//     const wholeString = cutString + newString;
+//     return wholeString;
+//   }
+//   const addString = initial.padStart(length, add);
+//   return addString;
+// };
+
+const addSymbol = (initial, length, add) => {
+  if (length - initial.length - add.length > 0) {
+    const newString = initial.padStart(length - 1, add);
+    const cutString = add.slice(0, - add.length + 1);
     const wholeString = cutString + newString;
     return wholeString;
-  } {
-    const newString = initial.padStart(length, add);
-    return newString;
   }
-}
+  const addString = initial.padStart(length, add);
+  return addString;
+};
 
 addSymbol('q', 4,'we');
 
-function checkLength (text, length) {
+const checkLength = (text, length) => {
   const string = String(text);
-  if (string.length <= length) {
-    return true;
-  } return false;
-}
+  return string.length <= length;
+};
+console.log(checkLength('fadsadass',10))
 checkLength('Проверка длинны строк', 10);
