@@ -61,3 +61,5 @@ const getPhoto = (id) => ({
 
 const getPhotos = () => Array.from({length: AMOUNT_OF_COPIES}, (v, id) => getPhoto(id + 1));
 getPhotos();
+
+export {getPhotos};
