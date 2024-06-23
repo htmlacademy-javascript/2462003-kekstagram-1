@@ -40,6 +40,11 @@ const Likes = {
   MAX: 200
 };
 
+const Comment = {
+  MIN: 1,
+  MAX: 20
+};
+
 const getComment = () => ({
   id: getRandomInteger(1, 2000),
   avatar: getRandomInteger(Avatar.MIN, Avatar.MAX),
@@ -47,7 +52,7 @@ const getComment = () => ({
   name: getRandomArrayElement(NAMES)
 });
 
-const getComments = () => Array.from({length: getRandomInteger(1, 20)}, getComment);
+const getComments = () => Array.from({length: getRandomInteger(Comment.MIN, Comment.MAX)}, getComment);
 
 const getPhoto = (id) => ({
   id: id,
@@ -60,4 +65,4 @@ const getPhoto = (id) => ({
 const getPhotos = () => Array.from({length: AMOUNT_OF_COPIES}, (v, id) => getPhoto(id + 1));
 getPhotos();
 
-export {getPhotos, getPhoto};
+export {getPhotos};
