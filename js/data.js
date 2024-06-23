@@ -2,8 +2,6 @@ import { getRandomInteger, getRandomArrayElement } from './util.js';
 
 const AMOUNT_OF_COPIES = 25;
 
-const AMOUNT_OF_COMMENTS = 15;
-
 const DESCRIPTIONS = [
   'Котенок играет с клубком ниток',
   'Радужный водопад в горах Китая',
@@ -49,7 +47,7 @@ const getComment = () => ({
   name: getRandomArrayElement(NAMES)
 });
 
-const getComments = () => Array.from({length: AMOUNT_OF_COMMENTS}, getComment);
+const getComments = () => Array.from({length: getRandomInteger(1, 20)}, getComment);
 
 const getPhoto = (id) => ({
   id: id,
@@ -62,4 +60,4 @@ const getPhoto = (id) => ({
 const getPhotos = () => Array.from({length: AMOUNT_OF_COPIES}, (v, id) => getPhoto(id + 1));
 getPhotos();
 
-export {getPhotos};
+export {getPhotos, getPhoto};
