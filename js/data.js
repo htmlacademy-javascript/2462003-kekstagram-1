@@ -2,8 +2,6 @@ import { getRandomInteger, getRandomArrayElement } from './util.js';
 
 const AMOUNT_OF_COPIES = 25;
 
-const AMOUNT_OF_COMMENTS = 15;
-
 const DESCRIPTIONS = [
   'Котенок играет с клубком ниток',
   'Радужный водопад в горах Китая',
@@ -42,6 +40,11 @@ const Likes = {
   MAX: 200
 };
 
+const Comment = {
+  MIN: 1,
+  MAX: 20
+};
+
 const getComment = () => ({
   id: getRandomInteger(1, 2000),
   avatar: getRandomInteger(Avatar.MIN, Avatar.MAX),
@@ -49,7 +52,7 @@ const getComment = () => ({
   name: getRandomArrayElement(NAMES)
 });
 
-const getComments = () => Array.from({length: AMOUNT_OF_COMMENTS}, getComment);
+const getComments = () => Array.from({length: getRandomInteger(Comment.MIN, Comment.MAX)}, getComment);
 
 const getPhoto = (id) => ({
   id: id,
