@@ -1,14 +1,10 @@
 import { isEscapeKey, isEnterKey } from './util.js';
-
 const fullphoto = document.querySelector('.overlay');
 const body = document.querySelector('body');
 const commentCount = fullphoto.querySelector('.social__comment-count');
 const commentLoader = fullphoto.querySelector('.social__comments-loader');
 const picturesContainer = document.querySelector('.pictures');
 const closeButton = fullphoto.querySelector('.big-picture__cancel');
-const pictures = document.querySelectorAll('.pictures');
-const pictureList = pictures.children;
-console.log(pictureList);
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -25,12 +21,6 @@ const getFullPhoto = () => {
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 };
-
-// const matchFullPhoto = (photos) => {
-//   for (i = 0; i < photos.length; i++) {
-
-//   }
-// }
 
 const closeFullPhoto = () => {
   fullphoto.classList.add('hidden');
