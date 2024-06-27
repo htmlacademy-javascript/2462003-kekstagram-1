@@ -7,6 +7,7 @@ const commentCount = fullphoto.querySelector('.social__comment-count');
 const commentLoader = fullphoto.querySelector('.social__comments-loader');
 const picturesContainer = document.querySelector('.pictures');
 const closeButton = fullphoto.querySelector('.big-picture__cancel');
+const commentsContainer = fullphoto.querySelector('.social__comments');
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -28,6 +29,7 @@ const closeFullPhoto = () => {
   fullphoto.classList.add('hidden');
   commentCount.classList.remove('hidden');
   commentLoader.classList.remove('hidden');
+  commentsContainer.innerHTML = '';
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 };
@@ -45,28 +47,31 @@ const matchFullPhoto = (evt) => {
   comments.textContent = photo.comments.length;
   socialCaption.textContent = photo.description;
 
-  const commentsContainer = fullphoto.querySelector('.social__comments');
-  const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
-  const fragment = document.createDocumentFragment();
+  const renderComments = (item) => {
 
-  photo.comments.forEach(({avatar,name ,message }) => {
-    const commentTemplateClone = commentTemplate.cloneNode(true);
-    const commentAvatar = commentTemplateClone.querySelector('.social__picture');
-    const commentText = commentTemplateClone.querySelector('.social__text');
+    const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
+    const fragment = document.createDocumentFragment();
 
-    commentAvatar.src = `img/avatar-${avatar}.svg` ;
-    commentAvatar.alt = name;
-    commentText.textContent = message;
-    fragment.appendChild(commentTemplateClone);
-  });
-  commentsContainer.appendChild(fragment);
+    item.comments.forEach(({avatar,name ,message }) => {
+      const commentTemplateClone = commentTemplate.cloneNode(true);
+      const commentAvatar = commentTemplateClone.querySelector('.social__picture');
+      const commentText = commentTemplateClone.querySelector('.social__text');
+
+      commentAvatar.src = `img/avatar-${avatar}.svg` ;
+      commentAvatar.alt = name;
+      commentText.textContent = message;
+      fragment.appendChild(commentTemplateClone);
+    });
+    commentsContainer.appendChild(fragment);
+  };
+  renderComments(photo);
+
 };
 
 picturesContainer.addEventListener('click', (evt) => {
   if (evt.target.closest('.picture')) {
     getFullPhoto();
     matchFullPhoto(evt);
-    // console.log(evt.target);
   }
 });
 picturesContainer.addEventListener('keydown', (evt) => {
