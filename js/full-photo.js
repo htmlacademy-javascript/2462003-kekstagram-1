@@ -1,10 +1,8 @@
 import { isEscapeKey } from './util.js';
-import {photos } from './main.js';
 
 const fullPhoto = document.querySelector('.big-picture');
 const commentCount = fullPhoto.querySelector('.social__comment-count');
 const commentLoader = fullPhoto.querySelector('.social__comments-loader');
-const picturesContainer = document.querySelector('.pictures');
 const closeButton = fullPhoto.querySelector('.big-picture__cancel');
 const commentsContainer = fullPhoto.querySelector('.social__comments');
 const bigImageContainer = fullPhoto.querySelector('.big-picture__img');
@@ -69,19 +67,10 @@ const openFullPhoto = (photo) => {
   matchFullPhoto(photo);
 };
 
-picturesContainer.addEventListener('click', (evt) => {
-  const picture = evt.target.closest('.picture');
-
-  if (picture) {
-    const photo = photos.find((item) => item.id === Number(picture.dataset.id));
-    openFullPhoto(photo);
-  }
-});
-
 const onCLoseButtonClick = () => {
   closeButton.addEventListener('click', closeFullPhoto);
 };
 
 onCLoseButtonClick();
 
-export {openFullPhoto, closeFullPhoto, matchFullPhoto};
+export {openFullPhoto};
