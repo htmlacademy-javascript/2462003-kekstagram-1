@@ -8,42 +8,41 @@ const commentsContainer = fullPhoto.querySelector('.social__comments');
 const bigImageContainer = fullPhoto.querySelector('.big-picture__img');
 const bigImage = bigImageContainer.querySelector('img');
 const likesCount = fullPhoto.querySelector('.likes-count');
-const comments = fullPhoto.querySelector('.comments-count');
+const commentsCount = fullPhoto.querySelector('.comments-count');
 const socialCaption = fullPhoto.querySelector('.social__caption');
 const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    fullPhoto.classList.add('hidden');
-    document.body.classList.remove('modal-open');
+    closeFullPhoto();
   }
 };
 
-const closeFullPhoto = () => {
+function closeFullPhoto () {
   fullPhoto.classList.add('hidden');
   commentCount.classList.remove('hidden');
   commentLoader.classList.remove('hidden');
   commentsContainer.innerHTML = '';
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-};
+}
 
-const getComment = ({avatar,name ,message}) => {
-  const commentTemplateClone = commentTemplate.cloneNode(true);
-  const commentAvatar = commentTemplateClone.querySelector('.social__picture');
-  const commentText = commentTemplateClone.querySelector('.social__text');
+const getComment = ({avatar, name, message}) => {
+  const newComment = commentTemplate.cloneNode(true);
+  const commentAvatar = newComment.querySelector('.social__picture');
+  const commentText = newComment.querySelector('.social__text');
 
   commentAvatar.src = `img/avatar-${avatar}.svg` ;
   commentAvatar.alt = name;
   commentText.textContent = message;
-  return commentTemplateClone;
+  return newComment;
 };
 
-const renderComments = (items) => {
+const renderComments = (comments) => {
   const fragment = document.createDocumentFragment();
 
-  items.forEach((comment) => {
+  comments.forEach((comment) => {
     fragment.appendChild(getComment(comment));
   });
   commentsContainer.appendChild(fragment);
@@ -52,7 +51,7 @@ const renderComments = (items) => {
 const matchFullPhoto = (photo) => {
   bigImage.src = photo.url;
   likesCount.textContent = photo.likes;
-  comments.textContent = photo.comments.length;
+  commentsCount.textContent = photo.comments.length;
   socialCaption.textContent = photo.description;
 
   renderComments(photo.comments);
@@ -67,10 +66,10 @@ const openFullPhoto = (photo) => {
   matchFullPhoto(photo);
 };
 
-const onCLoseButtonClick = () => {
-  closeButton.addEventListener('click', closeFullPhoto);
+const onCloseButtonClick = () => {
+  closeFullPhoto();
 };
 
-onCLoseButtonClick();
+closeButton.addEventListener('click', onCloseButtonClick);
 
 export {openFullPhoto};

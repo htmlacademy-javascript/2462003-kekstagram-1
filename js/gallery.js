@@ -2,7 +2,7 @@ import { openFullPhoto } from './full-photo.js';
 
 const picturesContainer = document.querySelector('.pictures');
 
-const addPicturesListener = (photos) => {
+const addGalleryListener = (photos) => {
   picturesContainer.addEventListener('click', (evt) => {
     const picture = evt.target.closest('.picture');
 
@@ -13,4 +13,4 @@ const addPicturesListener = (photos) => {
   });
 };
 
-export { addPicturesListener };
+export { addGalleryListener };
