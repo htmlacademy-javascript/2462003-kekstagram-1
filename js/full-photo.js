@@ -11,6 +11,7 @@ const likesCount = fullPhoto.querySelector('.likes-count');
 const commentsCount = fullPhoto.querySelector('.comments-count');
 const socialCaption = fullPhoto.querySelector('.social__caption');
 const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
+let lastComment = 5;
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -21,8 +22,6 @@ const onDocumentKeydown = (evt) => {
 
 function closeFullPhoto () {
   fullPhoto.classList.add('hidden');
-  commentCount.classList.remove('hidden');
-  commentLoader.classList.remove('hidden');
   commentsContainer.innerHTML = '';
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -41,26 +40,31 @@ const getComment = ({avatar, name, message}) => {
 
 const renderComments = (comments) => {
   const fragment = document.createDocumentFragment();
+  const commentsToRender = comments.slice(0,lastComment);
+  console.log(commentsToRender);
 
-  comments.forEach((comment) => {
+  commentsToRender.forEach((comment) => {
     fragment.appendChild(getComment(comment));
   });
   commentsContainer.appendChild(fragment);
+
+  // const commentsContainerContent = commentsContainer.children;
 };
+
 
 const matchFullPhoto = (photo) => {
   bigImage.src = photo.url;
   likesCount.textContent = photo.likes;
-  commentsCount.textContent = photo.comments.length;
+  // commentsCount.textContent = photo.comments.length;
   socialCaption.textContent = photo.description;
-
   renderComments(photo.comments);
+  commentCount.innerHTML = `${lastComment} из ${commentsCount.textContent = photo.comments.length} комментариев`;
+  console.log(commentsContainer.children);
 };
+
 
 const openFullPhoto = (photo) => {
   fullPhoto.classList.remove('hidden');
-  commentCount.classList.add('hidden');
-  commentLoader.classList.add('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   matchFullPhoto(photo);
@@ -71,5 +75,11 @@ const onCloseButtonClick = () => {
 };
 
 closeButton.addEventListener('click', onCloseButtonClick);
+
+const onCommentLoaderClick = () => {
+  lastComment = lastComment + 5;
+};
+
+commentLoader.addEventListener('click', onCommentLoaderClick);
 
 export {openFullPhoto};
