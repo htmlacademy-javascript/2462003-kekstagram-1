@@ -1,5 +1,7 @@
 import { isEscapeKey } from './util.js';
 
+const AMOUNT_OF_COMMENTS_ADDED = 5;
+
 const fullPhoto = document.querySelector('.big-picture');
 const commentCount = fullPhoto.querySelector('.social__comment-count');
 const commentLoader = fullPhoto.querySelector('.social__comments-loader');
@@ -10,8 +12,8 @@ const bigImage = bigImageContainer.querySelector('img');
 const likesCount = fullPhoto.querySelector('.likes-count');
 const socialCaption = fullPhoto.querySelector('.social__caption');
 const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
-let firstComment = 0;
-let lastComment = 5;
+let startCommentIndex = 0;
+let endCommentIndex = AMOUNT_OF_COMMENTS_ADDED;
 let comments = [];
 
 const onDocumentKeydown = (evt) => {
@@ -22,8 +24,8 @@ const onDocumentKeydown = (evt) => {
 };
 
 function closeFullPhoto () {
-  firstComment = 0;
-  lastComment = 5;
+  startCommentIndex = 0;
+  endCommentIndex = AMOUNT_OF_COMMENTS_ADDED;
   fullPhoto.classList.add('hidden');
   commentsContainer.innerHTML = '';
   document.body.classList.remove('modal-open');
@@ -42,28 +44,28 @@ const getComment = ({avatar, name, message}) => {
 };
 
 const renderComments = () => {
-  if (lastComment >= comments.length) {
+  if (endCommentIndex >= comments.length) {
     commentLoader.classList.add('hidden');
-    lastComment = comments.length;
+    endCommentIndex = comments.length;
   }
 
   const fragment = document.createDocumentFragment();
-  const commentsToRender = comments.slice(firstComment, lastComment);
+  const newComments = comments.slice(startCommentIndex, endCommentIndex);
 
-  commentsToRender.forEach((comment) => {
+  newComments .forEach((comment) => {
     fragment.appendChild(getComment(comment));
   });
 
   commentsContainer.appendChild(fragment);
-  commentCount.innerHTML = `${lastComment} из ${comments.length} комментариев`;
+  commentCount.innerHTML = `${endCommentIndex} из ${comments.length} комментариев`;
 };
 
-function matchFullPhoto (photo) {
+const matchFullPhoto = (photo) => {
   bigImage.src = photo.url;
   likesCount.textContent = photo.likes;
   socialCaption.textContent = photo.description;
   renderComments();
-}
+};
 
 const openFullPhoto = (photo) => {
   fullPhoto.classList.remove('hidden');
@@ -81,8 +83,8 @@ const onCloseButtonClick = () => {
 closeButton.addEventListener('click', onCloseButtonClick);
 
 const onCommentLoaderClick = () => {
-  lastComment = lastComment + 5;
-  firstComment = firstComment + 5;
+  endCommentIndex = endCommentIndex + AMOUNT_OF_COMMENTS_ADDED;
+  startCommentIndex = startCommentIndex + AMOUNT_OF_COMMENTS_ADDED;
   renderComments();
 };
 
