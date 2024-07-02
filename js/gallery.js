@@ -12,5 +12,4 @@ const addGalleryListener = (photos) => {
     }
   });
 };
-
 export { addGalleryListener };
