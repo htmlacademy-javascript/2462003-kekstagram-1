@@ -22,6 +22,8 @@ const onDocumentKeydown = (evt) => {
 };
 
 function closeFullPhoto () {
+  firstComment = 0;
+  lastComment = 5;
   fullPhoto.classList.add('hidden');
   commentsContainer.innerHTML = '';
   document.body.classList.remove('modal-open');
@@ -43,10 +45,13 @@ const renderComments = (comments) => {
   if (lastComment >= comments.length) {
     commentLoader.classList.add('hidden');
     lastComment = comments.length;
+  } if (lastComment > comments.length) {
+    lastComment = 5;
+    firstComment = 0;
   }
   const fragment = document.createDocumentFragment();
   const commentsToRender = comments.slice(firstComment, lastComment);
-
+  console.log(commentsToRender.length);
   commentsToRender.forEach((comment) => {
     fragment.appendChild(getComment(comment));
   });
@@ -55,7 +60,6 @@ const renderComments = (comments) => {
   const onCommentLoaderClick = () => {
     lastComment = lastComment + 5;
     firstComment = firstComment + 5;
-
     renderComments(comments);
   };
 
@@ -67,7 +71,6 @@ function matchFullPhoto (photo) {
   likesCount.textContent = photo.likes;
   socialCaption.textContent = photo.description;
   renderComments(photo.comments);
-  // commentCount.innerHTML = `${lastComment} из ${photo.comments.length} комментариев`;
 }
 
 const openFullPhoto = (photo) => {
@@ -75,8 +78,6 @@ const openFullPhoto = (photo) => {
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   commentLoader.classList.remove('hidden');
-  firstComment = 0;
-  lastComment = 5;
   matchFullPhoto(photo);
 };
 
