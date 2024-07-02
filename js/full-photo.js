@@ -8,11 +8,11 @@ const commentsContainer = fullPhoto.querySelector('.social__comments');
 const bigImageContainer = fullPhoto.querySelector('.big-picture__img');
 const bigImage = bigImageContainer.querySelector('img');
 const likesCount = fullPhoto.querySelector('.likes-count');
-// const commentsCount = fullPhoto.querySelector('.comments-count');
 const socialCaption = fullPhoto.querySelector('.social__caption');
 const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 let firstComment = 0;
 let lastComment = 5;
+let comments = [];
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -41,36 +41,28 @@ const getComment = ({avatar, name, message}) => {
   return newComment;
 };
 
-const renderComments = (comments) => {
+const renderComments = () => {
   if (lastComment >= comments.length) {
     commentLoader.classList.add('hidden');
     lastComment = comments.length;
-  } if (lastComment > comments.length) {
-    lastComment = 5;
-    firstComment = 0;
   }
+
   const fragment = document.createDocumentFragment();
   const commentsToRender = comments.slice(firstComment, lastComment);
-  console.log(commentsToRender.length);
+
   commentsToRender.forEach((comment) => {
     fragment.appendChild(getComment(comment));
   });
+
   commentsContainer.appendChild(fragment);
   commentCount.innerHTML = `${lastComment} из ${comments.length} комментариев`;
-  const onCommentLoaderClick = () => {
-    lastComment = lastComment + 5;
-    firstComment = firstComment + 5;
-    renderComments(comments);
-  };
-
-  commentLoader.addEventListener('click', onCommentLoaderClick);
 };
 
 function matchFullPhoto (photo) {
   bigImage.src = photo.url;
   likesCount.textContent = photo.likes;
   socialCaption.textContent = photo.description;
-  renderComments(photo.comments);
+  renderComments();
 }
 
 const openFullPhoto = (photo) => {
@@ -78,6 +70,7 @@ const openFullPhoto = (photo) => {
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   commentLoader.classList.remove('hidden');
+  comments = photo.comments;
   matchFullPhoto(photo);
 };
 
@@ -86,5 +79,13 @@ const onCloseButtonClick = () => {
 };
 
 closeButton.addEventListener('click', onCloseButtonClick);
+
+const onCommentLoaderClick = () => {
+  lastComment = lastComment + 5;
+  firstComment = firstComment + 5;
+  renderComments();
+};
+
+commentLoader.addEventListener('click', onCommentLoaderClick);
 
 export {openFullPhoto};
