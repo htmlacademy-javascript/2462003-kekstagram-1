@@ -1,4 +1,4 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey, isThereSpace } from './util.js';
 import '../vendor/pristine/pristine.min.js';
 
 const upload = document.querySelector('.img-upload__input');
@@ -49,17 +49,28 @@ uploadForm.addEventListener('submit', (evt) => {
 const validateHashtag = (value) => {
   if (value.length > 0) {
     const hashtags = value.split(' ');
-    console.log(hashtags)
-    // const checkSpaces = /#{0}/;
-    // checkSpaces.test(hashtags);
-    // console.log(checkSpaces.test(hashtags));
-    // const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
-    // console.log(hashtag.value.length)
-    // return regexp.test(value);
+    const spaceResults = [];
+    hashtags.forEach((element) => {
+      spaceResults.push(isThereSpace(element));
+    });
+
+    const allSpacesTrue = spaceResults.every((result) => result === true);
+
+    if (allSpacesTrue) {
+      const formatResults = [];
+      hashtags.forEach((element) => {
+        const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
+        formatResults.push(regexp.test(element));
+      });
+      const allFormatTrue = formatResults.every((result) => result === true);
+      if (allFormatTrue) {
+        return true;
+      }
+    } return false;
   }
 };
-
-pristine.addValidator(hashtag, validateHashtag, 'Должен соответствовать формату "#хештег"');
+console.log(validateHashtag(hashtag.value))
+pristine.addValidator(hashtag, validateHashtag, 'Должен соответствовать формату "#хештег", хештеги должны быть разделены пробелом');
 
 const onUploadChange = () => {
   uploadOverlay.classList.remove('hidden');
