@@ -17,6 +17,7 @@ function closePreview () {
   uploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  upload.value = '';
 }
 
 const onUploadChange = (evt) => {
