@@ -1,4 +1,4 @@
-import { isEscapeKey, isThereSpace } from './util.js';
+import { isEscapeKey, isThereSpace, isThereOneElement } from './util.js';
 import '../vendor/pristine/pristine.min.js';
 
 const upload = document.querySelector('.img-upload__input');
@@ -54,8 +54,16 @@ const validateHashtag = (value) => {
       spaceResults.push(isThereSpace(element));
     });
 
-    const allSpacesTrue = spaceResults.every((result) => result === true);
+    if (hashtags.length > 5) {
+      return false;
+    }
 
+    if (!isThereOneElement(hashtags)) {
+      return false;
+    }
+
+    const allSpacesTrue = spaceResults.every((result) => result === true);
+    console.log(hashtags.length)
     if (allSpacesTrue) {
       const formatResults = [];
       hashtags.forEach((element) => {

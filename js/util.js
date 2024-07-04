@@ -19,4 +19,8 @@ const isThereSpace = (arr) => {
     }
   } return true;
 };
-export {getRandomArrayElement, getRandomInteger, isEscapeKey, isThereSpace};
+
+const isThereOneElement = (arr) => {
+  arr.filter((element, index) => arr.includes(element, arr.indexOf(element) === index ? index + 1 : 0));
+};
+export {getRandomArrayElement, getRandomInteger, isEscapeKey, isThereSpace, isThereOneElement};
