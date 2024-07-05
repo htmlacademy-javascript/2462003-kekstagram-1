@@ -6,8 +6,6 @@ const uploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadForm = document.querySelector('.img-upload__form');
 const hashtag = uploadForm.querySelector('.text__hashtags');
 const comment = uploadForm.querySelector('.text__description');
-console.log(hashtag);
-// const loadedPreview = uploadForm.querySelector('.img-upload__preview img');
 const cancelButton = document.querySelector('.img-upload__cancel');
 
 const onDocumentKeydown = (evt) => {
@@ -37,48 +35,59 @@ const validateText = (value) => value.length <= 14;
 
 pristine.addValidator(uploadForm.querySelector('.text__description'), validateText, 'Не длиннее 14 символов');
 
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (pristine.validate() === true) {
-    return;
-  }
-  {evt.preventDefault();}
-  // console.log(pristine.validate())
-});
-
-const validateHashtag = (value) => {
+const validateHashtagSpaces = (value) => {
   if (value.length > 0) {
     const hashtags = value.split(' ');
     const spaceResults = [];
     hashtags.forEach((element) => {
       spaceResults.push(isThereSpace(element));
     });
-
-    if (hashtags.length > 5) {
-      return false;
-    }
-
-    if (!isThereOneElement(hashtags)) {
-      return false;
-    }
-
     const allSpacesTrue = spaceResults.every((result) => result === true);
-    console.log(hashtags.length)
     if (allSpacesTrue) {
-      const formatResults = [];
-      hashtags.forEach((element) => {
-        const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
-        formatResults.push(regexp.test(element));
-      });
-      const allFormatTrue = formatResults.every((result) => result === true);
-      if (allFormatTrue) {
-        return true;
-      }
+      return true;
     } return false;
   }
 };
-console.log(validateHashtag(hashtag.value))
-pristine.addValidator(hashtag, validateHashtag, 'Должен соответствовать формату "#хештег", хештеги должны быть разделены пробелом');
+
+const validateHashtagLength = (value) => {
+  const hashtags = value.split(' ');
+  if (hashtags.length > 5) {
+    return false;
+  } return true;
+};
+
+const validateHashtagRepeats = (value) => {
+  const hashtags = value.split(' ');
+  if (!isThereOneElement(hashtags)) {
+    return false;
+  } return true;
+};
+
+const validateHashtagFormat = (value) => {
+  const hashtags = value.split(' ');
+  const formatResults = [];
+  hashtags.forEach((element) => {
+    const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
+    formatResults.push(regexp.test(element));
+  });
+  const allFormatTrue = formatResults.every((result) => result === true);
+  if (allFormatTrue) {
+    return true;
+  }
+  return false;
+};
+
+pristine.addValidator(hashtag, validateHashtagSpaces, 'Хештеги должны быть разделены пробелами', 5, true);
+pristine.addValidator(hashtag, validateHashtagLength, 'Не больше 5 хештегов', 4, true);
+pristine.addValidator(hashtag, validateHashtagRepeats, 'Хештеги не должны повторяться', 3, true);
+pristine.addValidator(hashtag, validateHashtagFormat, 'Хештеги должны быть формата #хештег и не длиннее 20 символов', 2, true);
+
+uploadForm.addEventListener('submit', (evt) => {
+  if (pristine.validate() === true) {
+    return;
+  }
+  {evt.preventDefault();}
+});
 
 const onUploadChange = () => {
   uploadOverlay.classList.remove('hidden');

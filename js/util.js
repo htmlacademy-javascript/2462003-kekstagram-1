@@ -18,9 +18,21 @@ const isThereSpace = (arr) => {
       return false;
     }
   } return true;
-};
+} ;
 
 const isThereOneElement = (arr) => {
-  arr.filter((element, index) => arr.includes(element, arr.indexOf(element) === index ? index + 1 : 0));
+  const uniqSet = new Set(arr);
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < i; j++) {
+      if (arr[j] === arr[i]) {
+        uniqSet.add(arr[i]);
+      }
+    }
+  }
+  const uniq = Array.from(uniqSet);
+  if (uniq.length === arr.length) {
+    return true;
+  } return false;
 };
+
 export {getRandomArrayElement, getRandomInteger, isEscapeKey, isThereSpace, isThereOneElement};
