@@ -20,6 +20,8 @@ const isThereSpace = (arr) => {
   } return true;
 } ;
 
+const removeSpaces = (arr) => arr.filter((element) => element !== '');
+
 const isThereOneElement = (arr) => {
   const uniqSet = new Set(arr);
   for (let i = 0; i < arr.length; i++) {
@@ -35,4 +37,4 @@ const isThereOneElement = (arr) => {
   } return false;
 };
 
-export {getRandomArrayElement, getRandomInteger, isEscapeKey, isThereSpace, isThereOneElement};
+export {getRandomArrayElement, getRandomInteger, isEscapeKey, isThereSpace, isThereOneElement, removeSpaces};
