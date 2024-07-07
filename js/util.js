@@ -9,16 +9,6 @@ const getRandomInteger = (a, b) => {
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
-// Есть ли пробел в массиве хештегов
-const isThereSpace = (arr) => {
-  let count = 0;
-  for (let i = 0; i < arr.length; i++) {
-    count += arr[i] === '#' ? 1 : 0;
-    if (count > 1) {
-      return false;
-    }
-  } return true;
-} ;
 
 const removeSpaces = (arr) => arr.filter((element) => element !== '');
 

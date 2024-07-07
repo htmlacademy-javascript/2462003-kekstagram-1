@@ -1,4 +1,4 @@
-import { isThereSpace, removeSpaces, formatString } from './util.js';
+import { removeSpaces, formatString } from './util.js';
 
 const AMOUNT_OF_HASHTAGS = 5;
 const COMMENT_MAX_LENGTH = 140;
@@ -17,15 +17,12 @@ const pristine = new Pristine(uploadForm, {
 const validateText = (value) => value.length <= COMMENT_MAX_LENGTH;
 
 pristine.addValidator(uploadForm.querySelector('.text__description'), validateText, `Не длиннее ${COMMENT_MAX_LENGTH} символов`);
-// Я решил оставить первый вариант функции, потому что тот, который ты предложила конфликтует с функцией  validateHashtagFormat и у меня никак не получается заставить их работать вместе
+
 const validateHashtagSpaces = (value) => {
   const hashtags = value.split(' ');
-  const spaceResults = [];
-  hashtags.forEach((element) => {
-    spaceResults.push(isThereSpace(element));
-  });
-
-  return spaceResults.every((result) => result === true);
+  if (hashtags.every((element) => element.match(/#/g) !== null)) {
+    return hashtags.every((element) => element.match(/#/g).length === 1);
+  }
 };
 
 const validateHashtagLength = (value) => {
