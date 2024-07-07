@@ -37,4 +37,6 @@ const isThereOneElement = (arr) => {
   } return false;
 };
 
-export {getRandomArrayElement, getRandomInteger, isEscapeKey, isThereSpace, isThereOneElement, removeSpaces};
+const formatString = (value) => value.toLowerCase().trim();
+
+export {getRandomArrayElement, getRandomInteger, isEscapeKey, isThereSpace, isThereOneElement, removeSpaces, formatString};
