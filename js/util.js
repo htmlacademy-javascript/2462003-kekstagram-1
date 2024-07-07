@@ -29,4 +29,4 @@ const isThereOneElement = (arr) => {
 
 const formatString = (value) => value.toLowerCase().trim();
 
-export {getRandomArrayElement, getRandomInteger, isEscapeKey, isThereSpace, isThereOneElement, removeSpaces, formatString};
+export {getRandomArrayElement, getRandomInteger, isEscapeKey, isThereOneElement, removeSpaces, formatString};
