@@ -4,12 +4,12 @@ import { pristine } from './validate-form.js';
 const upload = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadForm = document.querySelector('.img-upload__form');
-const hashtag = uploadForm.querySelector('.text__hashtags');
-const comment = uploadForm.querySelector('.text__description');
 const cancelButton = document.querySelector('.img-upload__cancel');
 
+
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+  const activeElement = document.activeElement;
+  if (isEscapeKey(evt) && activeElement.tagName !== 'INPUT' && activeElement.tagName !== 'TEXTAREA') {
     evt.preventDefault();
     closePreview();
   }
@@ -38,26 +38,6 @@ const onCloseButtonClick = () => {
 };
 
 cancelButton.addEventListener('click', onCloseButtonClick);
-
-const onInputFocusin = () => {
-  document.removeEventListener('keydown', onDocumentKeydown);
-};
-
-const onInputFocusout = () => {
-  document.addEventListener('keydown', onDocumentKeydown);
-};
-
-uploadForm.addEventListener('focusin', (evt) => {
-  if (evt.target === hashtag || evt.target === comment) {
-    onInputFocusin();
-  }
-});
-
-uploadForm.addEventListener('focusout', (evt) => {
-  if (evt.target === hashtag || evt.target === comment) {
-    onInputFocusout();
-  }
-});
 
 uploadForm.addEventListener('submit', (evt) => {
   if (!pristine.validate()) {
