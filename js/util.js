@@ -18,7 +18,7 @@ const formatString = (value) => {
 const percentToNumber = (string) => {
   const filteredString = string.split('').filter((element) => element !== '%');
 
-  const sum = filteredString.reduce((accumulator, currentValue) => accumulator + currentValue);
+  const sum = +filteredString.reduce((accumulator, currentValue) => accumulator + currentValue);
 
   return sum;
 };
