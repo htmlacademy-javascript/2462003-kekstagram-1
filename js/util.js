@@ -10,23 +10,9 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const removeSpaces = (arr) => arr.filter((element) => element !== '');
-
-const isThereOneElement = (arr) => {
-  const uniqSet = new Set(arr);
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = 0; j < i; j++) {
-      if (arr[j] === arr[i]) {
-        uniqSet.add(arr[i]);
-      }
-    }
-  }
-  const uniq = Array.from(uniqSet);
-  if (uniq.length === arr.length) {
-    return true;
-  } return false;
+const formatString = (value) => {
+  const formatedString = value.toLowerCase().trim().split(' ');
+  return formatedString.filter((element) => element !== '');
 };
 
-const formatString = (value) => value.toLowerCase().trim();
-
-export {getRandomArrayElement, getRandomInteger, isEscapeKey, isThereOneElement, removeSpaces, formatString};
+export {getRandomArrayElement, getRandomInteger, isEscapeKey, formatString};

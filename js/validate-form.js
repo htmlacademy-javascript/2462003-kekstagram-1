@@ -1,4 +1,4 @@
-import { removeSpaces, formatString } from './util.js';
+import { formatString } from './util.js';
 
 const AMOUNT_OF_HASHTAGS = 5;
 const COMMENT_MAX_LENGTH = 140;
@@ -19,30 +19,25 @@ const validateText = (value) => value.length <= COMMENT_MAX_LENGTH;
 pristine.addValidator(uploadForm.querySelector('.text__description'), validateText, `Не длиннее ${COMMENT_MAX_LENGTH} символов`);
 
 const validateHashtagSpaces = (value) => {
-  const hashtags = value.split(' ');
-  if (hashtags.every((element) => element.match(/#/g) !== null)) {
-    return hashtags.every((element) => element.match(/#/g).length === 1);
-  }
+  const hashtags = formatString(value);
+  return hashtags.every((element) => element.match(/#/g) && element.match(/#/g).length === 1);
 };
 
 const validateHashtagLength = (value) => {
-  const hashtags = value.split(' ');
-  const hashtagsWithoutSpaces = removeSpaces(hashtags);
-  return hashtagsWithoutSpaces.length <= AMOUNT_OF_HASHTAGS;
+  const hashtags = formatString(value);
+  return hashtags.length <= AMOUNT_OF_HASHTAGS;
 };
 
 const validateHashtagRepeats = (value) => {
-  const hashtags = formatString(value).split(' ');
-  const hashtagsWithoutSpaces = removeSpaces(hashtags);
-  const uniqueHashtags = new Set(hashtagsWithoutSpaces);
-  return uniqueHashtags.size === hashtagsWithoutSpaces.length;
+  const hashtags = formatString(value);
+  const uniqueHashtags = new Set(hashtags);
+  return uniqueHashtags.size === hashtags.length;
 };
 
 const validateHashtagFormat = (value) => {
-  const hashtags = formatString(value).split(' ');
+  const hashtags = formatString(value);
   const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
-  const hashtagsWithoutSpaces = removeSpaces(hashtags);
-  return hashtagsWithoutSpaces.every((element) => regexp.test(element));
+  return hashtags.every((element) => regexp.test(element));
 };
 
 pristine.addValidator(hashtag, validateHashtagSpaces, 'Хештеги должны быть разделены пробелами', 6);
@@ -50,4 +45,6 @@ pristine.addValidator(hashtag, validateHashtagLength, 'Не больше 5 хе�
 pristine.addValidator(hashtag, validateHashtagRepeats, 'Хештеги не должны повторяться', 3, true);
 pristine.addValidator(hashtag, validateHashtagFormat, 'Хештеги должны быть формата #хештег и не длиннее 20 символов', 5, true);
 
-export { pristine };
+const validate = () => pristine.validate();
+
+export { validate };

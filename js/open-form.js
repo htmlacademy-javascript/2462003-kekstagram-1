@@ -1,5 +1,5 @@
 import { isEscapeKey } from './util.js';
-import { pristine } from './validate-form.js';
+import { validate } from './validate-form.js';
 
 const upload = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -19,7 +19,6 @@ function closePreview () {
   uploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  upload.value = '';
   uploadForm.reset();
 }
 
@@ -40,7 +39,7 @@ const onCloseButtonClick = () => {
 cancelButton.addEventListener('click', onCloseButtonClick);
 
 uploadForm.addEventListener('submit', (evt) => {
-  if (!pristine.validate()) {
+  if (!validate()) {
     evt.preventDefault();
   }
 });
