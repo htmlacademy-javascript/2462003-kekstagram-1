@@ -4,6 +4,7 @@ import { addGalleryListener } from './gallery.js';
 import './open-form.js';
 import './validate-form.js';
 import './scale.js';
+import './effect.js';
 
 const photos = getPhotos();
 

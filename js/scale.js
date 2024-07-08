@@ -8,7 +8,6 @@ const scaleBiggerButton = document.querySelector('.scale__control--bigger');
 const scaleValue = document.querySelector('.scale__control--value');
 const scalableImage = document.querySelector('.img-upload__preview img');
 
-
 let currentScaleValue = DEFAULT_SCALE;
 scaleValue.value = currentScaleValue;
 
@@ -33,3 +32,5 @@ const onBiggerButtonClick = () => {
 };
 
 scaleBiggerButton.addEventListener('click', onBiggerButtonClick);
+
+export {onSmallerButtonClick, onBiggerButtonClick};
