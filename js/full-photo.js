@@ -1,6 +1,6 @@
 import { isEscapeKey } from './util.js';
 
-const AMOUNT_OF_COMMENTS_ADDED = 5;
+const DEFAULT_COMMENT_AMOUNT = 5;
 
 const fullPhoto = document.querySelector('.big-picture');
 const commentCount = fullPhoto.querySelector('.social__comment-count');
@@ -13,7 +13,7 @@ const likesCount = fullPhoto.querySelector('.likes-count');
 const socialCaption = fullPhoto.querySelector('.social__caption');
 const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 let startCommentIndex = 0;
-let endCommentIndex = AMOUNT_OF_COMMENTS_ADDED;
+let endCommentIndex = DEFAULT_COMMENT_AMOUNT;
 let comments = [];
 
 const onDocumentKeydown = (evt) => {
@@ -25,7 +25,7 @@ const onDocumentKeydown = (evt) => {
 
 function closeFullPhoto () {
   startCommentIndex = 0;
-  endCommentIndex = AMOUNT_OF_COMMENTS_ADDED;
+  endCommentIndex = DEFAULT_COMMENT_AMOUNT;
   fullPhoto.classList.add('hidden');
   commentsContainer.innerHTML = '';
   document.body.classList.remove('modal-open');
@@ -83,8 +83,8 @@ const onCloseButtonClick = () => {
 closeButton.addEventListener('click', onCloseButtonClick);
 
 const onCommentLoaderClick = () => {
-  endCommentIndex = endCommentIndex + AMOUNT_OF_COMMENTS_ADDED;
-  startCommentIndex = startCommentIndex + AMOUNT_OF_COMMENTS_ADDED;
+  endCommentIndex += DEFAULT_COMMENT_AMOUNT;
+  startCommentIndex += DEFAULT_COMMENT_AMOUNT;
   renderComments();
 };
 

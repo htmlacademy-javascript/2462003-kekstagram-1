@@ -7,5 +7,12 @@ const getRandomInteger = (a, b) => {
 };
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+
 const isEscapeKey = (evt) => evt.key === 'Escape';
-export {getRandomArrayElement, getRandomInteger, isEscapeKey};
+
+const formatString = (value) => {
+  const formatedString = value.toLowerCase().trim().split(' ');
+  return formatedString.filter((element) => element !== '');
+};
+
+export {getRandomArrayElement, getRandomInteger, isEscapeKey, formatString};
