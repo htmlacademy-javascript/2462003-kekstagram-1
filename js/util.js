@@ -15,4 +15,12 @@ const formatString = (value) => {
   return formatedString.filter((element) => element !== '');
 };
 
-export {getRandomArrayElement, getRandomInteger, isEscapeKey, formatString};
+const percentToNumber = (string) => {
+  const filteredString = string.split('').filter((element) => element !== '%');
+
+  const sum = filteredString.reduce((accumulator, currentValue) => accumulator + currentValue);
+
+  return sum;
+};
+
+export {getRandomArrayElement, getRandomInteger, isEscapeKey, formatString, percentToNumber};
