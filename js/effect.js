@@ -1,39 +1,101 @@
 const effectsContainer = document.querySelector('.effects__list');
 const scalableImage = document.querySelector('.img-upload__preview img');
-const effectsList = effectsContainer.querySelectorAll('.effects__item');
+const sliderContainer = document.querySelector('.img-upload__effect-level');
+const sliderElement = sliderContainer.querySelector('.effect-level__slider');
+let sliderValue = sliderContainer.querySelector('.effect-level__value').value;
 
-effectsList.forEach((item, index) => {
-  item.dataset.effect = index;
+noUiSlider.create(sliderElement, {
+  range: {
+    min: 0,
+    max: 100,
+  },
+  start: 100,
+  step: 1,
+  connect: 'lower',
 });
 
-console.log(effectsList)
-
-const effects = {
-  0: '',
-  1: 'effects__preview--chrome',
-  2: 'effects__preview--sepia',
-  3: 'effects__preview--marvin',
-  4: 'effects__preview--phobos',
-  5: 'effects__preview--heat'
+const isSliderVisible = (evt) => {
+  if (evt.target.value !== 'none') {
+    sliderContainer.style = 'display: block';
+  } if (evt.target.value === 'none') {
+    sliderContainer.style = 'display: none';
+  }
 };
 
-const addEffectsListener = () => {
-  effectsContainer.addEventListener('click', (evt) => {
-    const effect = evt.target.closest('.effects__item');
-    if (effect) {
-      const effectClass = effect.dataset.effect;
-      addEffect(effectClass);
+const onEffectButtonClick = (evt) => {
+  if (evt.target.matches('.effects__radio')) {
+    const effectClass = evt.target.value;
+    scalableImage.className = '';
+    scalableImage.style = '';
+    scalableImage.classList.add(`effects__preview--${effectClass}`);
+    isSliderVisible(evt);
+    sliderElement.noUiSlider.set(100);
+
+    sliderElement.noUiSlider.updateOptions({
+      range: {
+        min: 0,
+        max: 1,
+      },
+      step: 0.1
+    });
+    sliderElement.noUiSlider.set(1);
+
+    if(document.querySelector('#effect-phobos').checked) {
+      sliderElement.noUiSlider.updateOptions({
+        range: {
+          min: 0,
+          max: 3
+        },
+        start: 3,
+        step: 0.1
+      });
     }
-  });
+    if(document.querySelector('#effect-heat').checked) {
+      sliderElement.noUiSlider.updateOptions({
+        range: {
+          min: 1,
+          max: 3
+        },
+        start: 3,
+        step: 0.1
+      });
+    } {
+      if(document.querySelector('#effect-marvin').checked) {
+        sliderElement.noUiSlider.updateOptions({
+          range: {
+            min: 0,
+            max: 100
+          },
+          start: 100,
+          step: 0.1
+        });
+      }
+    }
+  }
 };
-addEffectsListener(effectsList);
 
-function addEffect(elementIndex) {
-  scalableImage.classList.add(effects[elementIndex]);
-console.log(effects[elementIndex]);
-}
-// const onEffectButtonClick = (evt) => {
-//   console.log(evt.target)
-// };
+effectsContainer.addEventListener('click', onEffectButtonClick);
 
-// effectsContainer.addEventListener('click', onEffectButtonClick);
+const setFilterValue = (value) => {
+  if (document.querySelector('#effect-chrome').checked) {
+    scalableImage.style = `filter: grayscale(${value})`;
+  }
+  if (document.querySelector('#effect-sepia').checked) {
+    scalableImage.style = `filter: sepia(${value})`;
+  }
+  if (document.querySelector('#effect-marvin').checked) {
+    scalableImage.style = `filter: invert(${value}%)`;
+  }
+  if (document.querySelector('#effect-phobos').checked) {
+    scalableImage.style = `filter: blur(${value}px)`;
+  }
+  if (document.querySelector('#effect-heat').checked) {
+    scalableImage.style = `filter: brightness(${value})`;
+  }
+};
+
+sliderElement.noUiSlider.on('update', () => {
+  const valueElement = sliderElement.noUiSlider.get();
+  sliderValue = `${valueElement}`;
+  setFilterValue(sliderValue);
+});

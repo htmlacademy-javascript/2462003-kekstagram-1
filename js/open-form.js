@@ -5,7 +5,7 @@ const upload = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadForm = document.querySelector('.img-upload__form');
 const cancelButton = document.querySelector('.img-upload__cancel');
-
+const scalableImage = document.querySelector('.img-upload__preview img');
 
 const onDocumentKeydown = (evt) => {
   const activeElement = document.activeElement;
@@ -20,6 +20,7 @@ function closePreview () {
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   uploadForm.reset();
+  scalableImage.className = '';
 }
 
 const onUploadChange = () => {
