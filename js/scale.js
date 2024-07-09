@@ -1,36 +1,43 @@
-import { percentToNumber } from './util.js';
-
-const INCREMENT = 25;
-const DEFAULT_SCALE = '100%';
+const Scale = {
+  STEP: 25,
+  MIN: 25,
+  MAX: 100,
+  DEFAULT: 100
+};
 
 const scaleSmallerButton = document.querySelector('.scale__control--smaller');
 const scaleBiggerButton = document.querySelector('.scale__control--bigger');
-const scaleValue = document.querySelector('.scale__control--value');
-const scalableImage = document.querySelector('.img-upload__preview img');
+const fieldElement = document.querySelector('.scale__control--value');
+const uploadImageElement = document.querySelector('.img-upload__preview img');
 
-let currentScaleValue = DEFAULT_SCALE;
-scaleValue.value = currentScaleValue;
+let currentScaleValue = Scale.DEFAULT;
+
+fieldElement.value = currentScaleValue;
+
+const setScale = (value) => {
+  fieldElement.value = `${value}`;
+  uploadImageElement.style.transform = `scale(${parseInt(value, 10) / 100})`;
+};
 
 const onSmallerButtonClick = () => {
-  if (percentToNumber(currentScaleValue) > 25) {
-    const number = percentToNumber(currentScaleValue);
-    currentScaleValue = `${number - INCREMENT}%`;
-    scaleValue.value = currentScaleValue;
-    scalableImage.style = `transform: scale(${(number / 100) - (INCREMENT / 100)})`;
+  if (parseInt(currentScaleValue, 10) > Scale.MIN) {
+    const number = parseInt(currentScaleValue, 10);
+    currentScaleValue = `${number - Scale.STEP}%`;
+    setScale(currentScaleValue);
   }
 };
-
-scaleSmallerButton.addEventListener('click', onSmallerButtonClick);
 
 const onBiggerButtonClick = () => {
-  if (percentToNumber(currentScaleValue) < 100) {
-    const number = percentToNumber(currentScaleValue);
-    currentScaleValue = `${number + INCREMENT}%`;
-    scaleValue.value = currentScaleValue;
-    scalableImage.style = `transform: scale(${(number / 100) + (INCREMENT / 100)})`;
+  if (parseInt(currentScaleValue, 10) < Scale.MAX) {
+    const number = parseInt(currentScaleValue, 10);
+    currentScaleValue = `${number + Scale.STEP}%`;
+    setScale(currentScaleValue);
   }
 };
 
-scaleBiggerButton.addEventListener('click', onBiggerButtonClick);
+const initScale = () => {
+  scaleSmallerButton.addEventListener('click', onSmallerButtonClick);
+  scaleBiggerButton.addEventListener('click', onBiggerButtonClick);
+};
 
-export {onSmallerButtonClick, onBiggerButtonClick};
+export {initScale};

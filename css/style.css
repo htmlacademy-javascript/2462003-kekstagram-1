@@ -537,7 +537,7 @@ main {
   position: absolute;
   bottom: 9px;
   left: 50%;
-  display: none;
+  /* display: none; */
   padding: 7px 11px 0;
 
   width: 495px;
