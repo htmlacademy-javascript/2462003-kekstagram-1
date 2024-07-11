@@ -1,7 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { validate } from './validate-form.js';
 import { resetEffect } from './effect.js';
-import { Scale, setScale } from './scale.js';
+import { resetScale } from './scale.js';
 
 const upload = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -12,7 +12,7 @@ const sliderContainer = document.querySelector('.img-upload__effect-level');
 const resetForm = () => {
   uploadForm.reset();
   resetEffect();
-  setScale(Scale.DEFAULT);
+  resetScale();
 };
 
 const onDocumentKeydown = (evt) => {

@@ -75,14 +75,6 @@ const EFFECT_CONFIG = {
 
 noUiSlider.create(slider, EFFECT_CONFIG[Effect.NONE]);
 
-const checkSliderVisibility = (effectClass) => {
-  if (effectClass !== 'none') {
-    sliderContainer.classList.remove('hidden');
-  } else {
-    sliderContainer.classList.add('hidden');
-  }
-};
-
 const setEffect = (effect) => {
   uploadImage.classList.remove(`effects__preview--${uploadImage.dataset.effect}`);
   uploadImage.classList.add(`effects__preview--${effect}`);
@@ -99,39 +91,42 @@ const resetEffect = () => {
   setEffect(Effect.NONE);
 };
 
+const getEffectUnit = (effect) => {
+  switch (effect) {
+    case 'marvin': return '%';
+    case 'phobos': return 'px';
+    default: return '';
+  }
+};
+
+const setFilterValue = (value) => {
+  const effect = uploadImage.dataset.effect;
+
+  if (effect === 'none') {
+    uploadImage.style.filter = null;
+    sliderContainer.classList.add('hidden');
+
+  } else {
+    sliderContainer.classList.remove('hidden');
+    uploadImage.style.filter = `${effectToFilterName[effect]}(${value}${getEffectUnit(effect)})`;
+  }
+};
+
 const onEffectButtonClick = (evt) => {
   if (evt.target.matches('.effects__radio')) {
     const effectClass = evt.target.value;
     uploadImage.style = '';
     setEffect(effectClass);
-    checkSliderVisibility(effectClass);
+    setFilterValue(effectClass);
   }
 };
 
 effectsContainer.addEventListener('click', onEffectButtonClick);
 
-const setFilterValue = (value) => {
-  if (document.querySelector('#effect-chrome').checked) {
-    uploadImage.style = `filter: ${effectToFilterName[Effect.CHROME]}(${value})`;
-  }
-  if (document.querySelector('#effect-sepia').checked) {
-    uploadImage.style = `filter: ${effectToFilterName[Effect.SEPIA]}(${value})`;
-  }
-  if (document.querySelector('#effect-marvin').checked) {
-    uploadImage.style = `filter: ${effectToFilterName[Effect.MARVIN]}(${value}%)`;
-  }
-  if (document.querySelector('#effect-phobos').checked) {
-    uploadImage.style = `filter: ${effectToFilterName[Effect.PHOBOS]}(${value}px)`;
-  }
-  if (document.querySelector('#effect-heat').checked) {
-    uploadImage.style = `filter: ${effectToFilterName[Effect.HEAT]}(${value})`;
-  }
-};
-
 slider.noUiSlider.on('update', () => {
   const value = slider.noUiSlider.get();
-  sliderValue.value = `${value}`;
-  setFilterValue(sliderValue.value);
+  sliderValue.value = value;
+  setFilterValue(value);
 });
 
 export { resetEffect };
