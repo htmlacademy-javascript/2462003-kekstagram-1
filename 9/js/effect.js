@@ -1,7 +1,7 @@
 const effectsContainer = document.querySelector('.effects__list');
-const uploadImageElement = document.querySelector('.img-upload__preview img');
+const uploadImage = document.querySelector('.img-upload__preview img');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
-const sliderElement = sliderContainer.querySelector('.effect-level__slider');
+const slider = sliderContainer.querySelector('.effect-level__slider');
 const sliderValue = sliderContainer.querySelector('.effect-level__value');
 
 const Effect = {
@@ -73,64 +73,60 @@ const EFFECT_CONFIG = {
   },
 };
 
-noUiSlider.create(sliderElement, EFFECT_CONFIG[Effect.NONE]);
+noUiSlider.create(slider, EFFECT_CONFIG[Effect.NONE]);
 
-const checkSliderVisibility = (effectClass) => {
-  if (effectClass !== 'none') {
-    sliderContainer.classList.remove('hidden');
-  } else {
+const setEffect = (effect) => {
+  uploadImage.classList.remove(`effects__preview--${uploadImage.dataset.effect}`);
+  uploadImage.classList.add(`effects__preview--${effect}`);
+  uploadImage.dataset.effect = effect;
+
+  slider.noUiSlider.updateOptions({
+    ...EFFECT_CONFIG[effect],
+    connect: 'lower'
+  });
+};
+
+const resetEffect = () => {
+  uploadImage.style = '';
+  setEffect(Effect.NONE);
+};
+
+const getEffectUnit = (effect) => {
+  switch (effect) {
+    case 'marvin': return '%';
+    case 'phobos': return 'px';
+    default: return '';
+  }
+};
+
+const setFilterValue = (value) => {
+  const effect = uploadImage.dataset.effect;
+
+  if (effect === 'none') {
+    uploadImage.style.filter = null;
     sliderContainer.classList.add('hidden');
+
+  } else {
+    sliderContainer.classList.remove('hidden');
+    uploadImage.style.filter = `${effectToFilterName[effect]}(${value}${getEffectUnit(effect)})`;
   }
 };
 
 const onEffectButtonClick = (evt) => {
   if (evt.target.matches('.effects__radio')) {
     const effectClass = evt.target.value;
-    uploadImageElement.style = '';
-    uploadImageElement.classList = '';
-    uploadImageElement.classList.add(`effects__preview--${effectClass}`);
-    checkSliderVisibility(effectClass);
-    sliderElement.noUiSlider.set(100);
-
-    sliderElement.noUiSlider.updateOptions(
-      EFFECT_CONFIG[Effect.CHROME]
-    );
-
-    if(document.querySelector('#effect-phobos').checked) {
-      sliderElement.noUiSlider.updateOptions(EFFECT_CONFIG[Effect.PHOBOS]
-      );
-    }
-    if(document.querySelector('#effect-heat').checked) {
-      sliderElement.noUiSlider.updateOptions(EFFECT_CONFIG[Effect.HEAT]);
-    }
-    if(document.querySelector('#effect-marvin').checked) {
-      sliderElement.noUiSlider.updateOptions(EFFECT_CONFIG[Effect.MARVIN]);
-    }
+    uploadImage.style = '';
+    setEffect(effectClass);
+    setFilterValue(effectClass);
   }
 };
 
 effectsContainer.addEventListener('click', onEffectButtonClick);
 
-const setFilterValue = (value) => {
-  if (document.querySelector('#effect-chrome').checked) {
-    uploadImageElement.style = `filter: ${effectToFilterName[Effect.CHROME]}(${value})`;
-  }
-  if (document.querySelector('#effect-sepia').checked) {
-    uploadImageElement.style = `filter: ${effectToFilterName[Effect.SEPIA]}(${value})`;
-  }
-  if (document.querySelector('#effect-marvin').checked) {
-    uploadImageElement.style = `filter: ${effectToFilterName[Effect.MARVIN]}(${value}%)`;
-  }
-  if (document.querySelector('#effect-phobos').checked) {
-    uploadImageElement.style = `filter: ${effectToFilterName[Effect.PHOBOS]}(${value}px)`;
-  }
-  if (document.querySelector('#effect-heat').checked) {
-    uploadImageElement.style = `filter: ${effectToFilterName[Effect.HEAT]}(${value})`;
-  }
-};
-
-sliderElement.noUiSlider.on('update', () => {
-  const valueElement = sliderElement.noUiSlider.get();
-  sliderValue.value = `${valueElement}`;
-  setFilterValue(sliderValue.value);
+slider.noUiSlider.on('update', () => {
+  const value = slider.noUiSlider.get();
+  sliderValue.value = value;
+  setFilterValue(value);
 });
+
+export { resetEffect };

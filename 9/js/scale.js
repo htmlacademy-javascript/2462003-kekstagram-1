@@ -7,37 +7,36 @@ const Scale = {
 
 const scaleSmallerButton = document.querySelector('.scale__control--smaller');
 const scaleBiggerButton = document.querySelector('.scale__control--bigger');
-const fieldElement = document.querySelector('.scale__control--value');
-const uploadImageElement = document.querySelector('.img-upload__preview img');
+const scaleField = document.querySelector('.scale__control--value');
+const uploadImage = document.querySelector('.img-upload__preview img');
 
-let currentScaleValue = Scale.DEFAULT;
-
-fieldElement.value = currentScaleValue;
+const resetScale = () => {
+  scaleField.value = `${Scale.DEFAULT}%`;
+};
 
 const setScale = (value) => {
-  fieldElement.value = `${value}`;
-  uploadImageElement.style.transform = `scale(${parseInt(value, 10) / 100})`;
+  scaleField.value = `${value}%`;
+  uploadImage.style.transform = `scale(${value / 100})`;
 };
 
 const onSmallerButtonClick = () => {
-  if (parseInt(currentScaleValue, 10) > Scale.MIN) {
-    const number = parseInt(currentScaleValue, 10);
-    currentScaleValue = `${number - Scale.STEP}%`;
-    setScale(currentScaleValue);
+  const currentValue = parseInt(scaleField.value, 10);
+  if (currentValue > Scale.MIN) {
+    setScale(currentValue - Scale.STEP);
   }
 };
 
 const onBiggerButtonClick = () => {
-  if (parseInt(currentScaleValue, 10) < Scale.MAX) {
-    const number = parseInt(currentScaleValue, 10);
-    currentScaleValue = `${number + Scale.STEP}%`;
-    setScale(currentScaleValue);
+  const currentValue = parseInt(scaleField.value, 10);
+  if (currentValue < Scale.MAX) {
+    setScale(currentValue + Scale.STEP);
   }
 };
 
 const initScale = () => {
+  resetScale();
   scaleSmallerButton.addEventListener('click', onSmallerButtonClick);
   scaleBiggerButton.addEventListener('click', onBiggerButtonClick);
 };
 
-export {initScale};
+export {initScale, resetScale};

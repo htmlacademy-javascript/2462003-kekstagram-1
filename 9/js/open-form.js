@@ -1,12 +1,19 @@
 import { isEscapeKey } from './util.js';
 import { validate } from './validate-form.js';
+import { resetEffect } from './effect.js';
+import { resetScale } from './scale.js';
 
 const upload = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadForm = document.querySelector('.img-upload__form');
 const cancelButton = document.querySelector('.img-upload__cancel');
-const uploadImageElement = document.querySelector('.img-upload__preview img');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
+
+const resetForm = () => {
+  uploadForm.reset();
+  resetEffect();
+  resetScale();
+};
 
 const onDocumentKeydown = (evt) => {
   const activeElement = document.activeElement;
@@ -20,9 +27,7 @@ function closePreview () {
   uploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  uploadForm.reset();
-  uploadImageElement.className = '';
-  uploadImageElement.style = '';
+  resetForm();
 }
 
 const onUploadChange = () => {
@@ -35,9 +40,7 @@ const onUploadChange = () => {
 upload.addEventListener('change', onUploadChange);
 
 const onCloseButtonClick = () => {
-  uploadOverlay.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentKeydown);
+  closePreview();
 };
 
 cancelButton.addEventListener('click', onCloseButtonClick);
