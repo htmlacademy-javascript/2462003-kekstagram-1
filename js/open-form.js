@@ -39,7 +39,8 @@ const onUploadChange = () => {
 
 upload.addEventListener('change', onUploadChange);
 
-const onCloseButtonClick = () => {
+const onCloseButtonClick = (evt) => {
+  evt.preventDefault();
   closePreview();
 };
 
