@@ -16,8 +16,8 @@ const resetForm = () => {
 };
 
 const onDocumentKeydown = (evt) => {
-  const activeElement = document.activeElement;
-  if (isEscapeKey(evt) && activeElement.tagName !== 'INPUT' && activeElement.tagName !== 'TEXTAREA') {
+  const activeElement = document.activeElement.className;
+  if (isEscapeKey(evt) && activeElement !== 'text__hashtags' && activeElement !== 'text__description') {
     evt.preventDefault();
     closePreview();
   }
