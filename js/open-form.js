@@ -51,6 +51,9 @@ uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
   } else {
     evt.preventDefault();
-    // const formData = new FormData(evt.target);
+    const formData = new FormData(evt.target);
+    for (let pair of formData.entries()) {
+      console.log(pair)
+    }
   }
 });
