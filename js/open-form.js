@@ -49,5 +49,8 @@ cancelButton.addEventListener('click', onCloseButtonClick);
 uploadForm.addEventListener('submit', (evt) => {
   if (!validate()) {
     evt.preventDefault();
+  } else {
+    evt.preventDefault();
+    // const formData = new FormData(evt.target);
   }
 });

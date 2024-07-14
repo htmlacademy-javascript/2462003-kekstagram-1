@@ -12,7 +12,7 @@ const pristine = new Pristine(uploadForm, {
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'span',
   errorTextClass: 'form__error'
-}, false);
+});
 
 const validateText = (value) => value.length <= COMMENT_MAX_LENGTH;
 
