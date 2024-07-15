@@ -1,13 +1,20 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey, showAlert } from './util.js';
 import { validate } from './validate-form.js';
 import { resetEffect } from './effect.js';
 import { resetScale } from './scale.js';
+import { sendData } from './api.js';
+
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
 
 const upload = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const uploadForm = document.querySelector('.img-upload__form');
 const cancelButton = document.querySelector('.img-upload__cancel');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
+const submitButton = uploadForm.querySelector('.img-upload__submit');
 
 const resetForm = () => {
   uploadForm.reset();
@@ -46,14 +53,29 @@ const onCloseButtonClick = (evt) => {
 
 cancelButton.addEventListener('click', onCloseButtonClick);
 
-uploadForm.addEventListener('submit', (evt) => {
-  if (!validate()) {
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+const setUserFormSubmit = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-  } else {
-    evt.preventDefault();
-    const formData = new FormData(evt.target);
-    for (let pair of formData.entries()) {
-      console.log(pair)
+    if (validate()) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .catch((err) => {
+          showAlert(err.message);
+        })
+        .finally(unblockSubmitButton());
     }
-  }
-});
+  });
+};
+
+export {setUserFormSubmit, closePreview};
