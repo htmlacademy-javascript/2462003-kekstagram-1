@@ -3,10 +3,16 @@ import { validate } from './validate-form.js';
 import { resetEffect } from './effect.js';
 import { resetScale } from './scale.js';
 import { sendData } from './api.js';
+import { createMessage } from './upload-popups.js';
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Публикую...'
+};
+
+const Templates = {
+  SUCCESS: document.querySelector('#success').content.querySelector('.success'),
+  ERROR: document.querySelector('#error').content.querySelector('.error'),
 };
 
 const upload = document.querySelector('.img-upload__input');
@@ -29,6 +35,8 @@ const onDocumentKeydown = (evt) => {
     closePreview();
   }
 };
+
+document.addEventListener('keydown', onDocumentKeydown);
 
 function closePreview () {
   uploadOverlay.classList.add('hidden');
@@ -70,12 +78,14 @@ const setUserFormSubmit = (onSuccess) => {
       blockSubmitButton();
       sendData(new FormData(evt.target))
         .then(onSuccess)
+        .then(createMessage(Templates.SUCCESS))
         .catch((err) => {
           showAlert(err.message);
+          createMessage(Templates.ERROR);
         })
         .finally(unblockSubmitButton());
     }
   });
 };
 
-export {setUserFormSubmit, closePreview};
+export {setUserFormSubmit, closePreview, resetForm};
