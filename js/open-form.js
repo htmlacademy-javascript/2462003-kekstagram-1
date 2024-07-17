@@ -3,7 +3,7 @@ import { validate } from './validate-form.js';
 import { resetEffect } from './effect.js';
 import { resetScale } from './scale.js';
 import { sendData } from './api.js';
-import { createMessage, deleteMessage } from './message.js';
+import { createMessage } from './message.js';
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
@@ -26,12 +26,9 @@ const resetForm = () => {
 const onDocumentKeydown = (evt) => {
   const activeElement = document.activeElement.className;
   const error = document.querySelector('.error__inner');
-  if (isEscapeKey(evt) && activeElement !== 'text__hashtags' && activeElement !== 'text__description') {
+  if (isEscapeKey(evt) && !error && activeElement !== 'text__hashtags' && activeElement !== 'text__description') {
     evt.preventDefault();
-    deleteMessage();
-    if (!error) {
-      closePreview();
-    }
+    closePreview();
   }
 };
 

@@ -10,7 +10,10 @@ const messageTypeToTemplate = {
 
 const onDocumentClick = (evt) => {
   const message = document.querySelector('.message');
+  const messageButton = document.querySelector('.message__button');
   if (!message.firstElementChild.contains(evt.target)) {
+    deleteMessage();
+  } if (evt.target === messageButton) {
     deleteMessage();
   }
 };
@@ -22,25 +25,17 @@ const onDocumentKeydown = (evt) => {
 };
 
 function deleteMessage () {
-  const elementToDelete = document.querySelector('.message');
-  if (elementToDelete) {
-    elementToDelete.remove();
-    elementToDelete.removeEventListener('click', onPopupButtonClick);
+  const message = document.querySelector('.message');
+  if (message) {
+    message.remove();
     document.removeEventListener('click', onDocumentClick);
     document.removeEventListener('keydown', onDocumentKeydown);
-  }
-}
-
-function onPopupButtonClick (evt) {
-  if (evt.target.closest('button')) {
-    deleteMessage();
   }
 }
 
 const createMessage = (string) => {
   const message = messageTypeToTemplate[string].cloneNode(true);
   document.body.appendChild(message);
-  message.addEventListener('click', onPopupButtonClick);
   document.addEventListener('click', onDocumentClick);
   document.addEventListener('keydown', onDocumentKeydown);
 };
