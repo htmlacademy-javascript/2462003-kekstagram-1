@@ -4,7 +4,6 @@ import { setUserFormSubmit, closePreview } from './open-form.js';
 import { initScale } from './scale.js';
 import { getData } from './api.js';
 import { showAlert } from './util.js';
-import './upload-popups.js';
 
 initScale();
 

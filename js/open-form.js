@@ -1,18 +1,13 @@
-import { isEscapeKey, showAlert } from './util.js';
+import { isEscapeKey } from './util.js';
 import { validate } from './validate-form.js';
 import { resetEffect } from './effect.js';
 import { resetScale } from './scale.js';
 import { sendData } from './api.js';
-import { createMessage } from './upload-popups.js';
+import { createMessage, deleteMessage } from './message.js';
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Публикую...'
-};
-
-const Templates = {
-  SUCCESS: document.querySelector('#success').content.querySelector('.success'),
-  ERROR: document.querySelector('#error').content.querySelector('.error'),
 };
 
 const upload = document.querySelector('.img-upload__input');
@@ -30,13 +25,13 @@ const resetForm = () => {
 
 const onDocumentKeydown = (evt) => {
   const activeElement = document.activeElement.className;
-  if (isEscapeKey(evt) && activeElement !== 'text__hashtags' && activeElement !== 'text__description') {
+  const popupMessage = document.querySelectorAll('[data-type="popup"');
+  if ((isEscapeKey(evt) && popupMessage) || isEscapeKey(evt) && activeElement !== 'text__hashtags' && activeElement !== 'text__description') {
     evt.preventDefault();
     closePreview();
+    deleteMessage();
   }
 };
-
-document.addEventListener('keydown', onDocumentKeydown);
 
 function closePreview () {
   uploadOverlay.classList.add('hidden');
@@ -78,10 +73,11 @@ const setUserFormSubmit = (onSuccess) => {
       blockSubmitButton();
       sendData(new FormData(evt.target))
         .then(onSuccess)
-        .then(createMessage(Templates.SUCCESS))
-        .catch((err) => {
-          showAlert(err.message);
-          createMessage(Templates.ERROR);
+        .then(() => {
+          createMessage('success');
+        })
+        .catch(() => {
+          createMessage('error');
         })
         .finally(unblockSubmitButton());
     }
