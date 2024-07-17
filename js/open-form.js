@@ -25,11 +25,13 @@ const resetForm = () => {
 
 const onDocumentKeydown = (evt) => {
   const activeElement = document.activeElement.className;
-  const popupMessage = document.querySelectorAll('[data-type="popup"');
-  if ((isEscapeKey(evt) && popupMessage) || isEscapeKey(evt) && activeElement !== 'text__hashtags' && activeElement !== 'text__description') {
+  const error = document.querySelector('.error__inner');
+  if (isEscapeKey(evt) && activeElement !== 'text__hashtags' && activeElement !== 'text__description') {
     evt.preventDefault();
-    closePreview();
     deleteMessage();
+    if (!error) {
+      closePreview();
+    }
   }
 };
 
