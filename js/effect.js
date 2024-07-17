@@ -73,29 +73,30 @@ const EFFECT_CONFIG = {
   },
 };
 
-noUiSlider.create(slider, EFFECT_CONFIG[Effect.NONE]);
+noUiSlider.create(slider,
+  {...EFFECT_CONFIG[Effect.NONE],
+    connect: 'lower'});
 
 const setEffect = (effect) => {
   uploadImage.classList.remove(`effects__preview--${uploadImage.dataset.effect}`);
   uploadImage.classList.add(`effects__preview--${effect}`);
   uploadImage.dataset.effect = effect;
 
-  slider.noUiSlider.updateOptions({
-    ...EFFECT_CONFIG[effect],
-    connect: 'lower'
-  });
+  slider.noUiSlider.updateOptions(EFFECT_CONFIG[effect]);
 };
 
 const resetEffect = () => {
-  uploadImage.style = '';
   setEffect(Effect.NONE);
 };
 
 const getEffectUnit = (effect) => {
   switch (effect) {
-    case 'marvin': return '%';
-    case 'phobos': return 'px';
-    default: return '';
+    case 'marvin':
+      return '%';
+    case 'phobos':
+      return 'px';
+    default:
+      return '';
   }
 };
 
@@ -114,10 +115,9 @@ const setFilterValue = (value) => {
 
 const onEffectButtonClick = (evt) => {
   if (evt.target.matches('.effects__radio')) {
-    const effectClass = evt.target.value;
-    uploadImage.style = '';
-    setEffect(effectClass);
-    setFilterValue(effectClass);
+    const effect = evt.target.value;
+    setEffect(effect);
+    setFilterValue(EFFECT_CONFIG[effect].start);
   }
 };
 

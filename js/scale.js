@@ -10,13 +10,13 @@ const scaleBiggerButton = document.querySelector('.scale__control--bigger');
 const scaleField = document.querySelector('.scale__control--value');
 const uploadImage = document.querySelector('.img-upload__preview img');
 
-const resetScale = () => {
-  scaleField.value = `${Scale.DEFAULT}%`;
-};
-
 const setScale = (value) => {
   scaleField.value = `${value}%`;
   uploadImage.style.transform = `scale(${value / 100})`;
+};
+
+const resetScale = () => {
+  setScale((Scale.DEFAULT));
 };
 
 const onSmallerButtonClick = () => {

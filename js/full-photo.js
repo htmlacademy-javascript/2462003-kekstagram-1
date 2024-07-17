@@ -37,7 +37,7 @@ const getComment = ({avatar, name, message}) => {
   const commentAvatar = newComment.querySelector('.social__picture');
   const commentText = newComment.querySelector('.social__text');
 
-  commentAvatar.src = `img/avatar-${avatar}.svg` ;
+  commentAvatar.src = avatar;
   commentAvatar.alt = name;
   commentText.textContent = message;
   return newComment;
