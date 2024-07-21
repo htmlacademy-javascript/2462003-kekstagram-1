@@ -37,17 +37,6 @@ const removeActiveClass = () => {
   activeFilterButton.classList.remove('img-filters__button--active');
 };
 
-// const onFilterButtonClick = (evt) => {
-//   const activeFilterButton = document.querySelector('.img-filters__button--active');
-//   activeFilterButton.classList.remove('img-filters__button--active');
-//   evt.target.classList.add('img-filters__button--active');
-//   if (evt.target === defaultButton) {
-//     clearElements();
-//     const debouncedRenderPhotos = debounce(renderPhotos);
-//     debouncedRenderPhotos(pictures);
-//   }
-// };
-
 const renderPicturesFilter = (pictures) => {
   clearElements();
   renderPhotos(pictures);
