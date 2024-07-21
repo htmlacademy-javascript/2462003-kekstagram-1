@@ -10,6 +10,15 @@ const getRandomInteger = (a, b) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
+const shuffle = (arr) => {
+  const newArr = [...arr];
+  for (let i = newArr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+  }
+  return newArr;
+};
+
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const formatString = (value) => {
@@ -38,4 +47,4 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {getRandomArrayElement, getRandomInteger, isEscapeKey, formatString, showAlert};
+export {getRandomArrayElement, getRandomInteger, isEscapeKey, formatString, showAlert, shuffle};
