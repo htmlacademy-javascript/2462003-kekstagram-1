@@ -10,19 +10,16 @@ const getRandomInteger = (a, b) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-function shuffle(array) {
-  let currentIndex = array.length;
-  let temporaryValue;
+const shuffle = (elements) => {
+  let currentIndex = elements.length;
   let randomIndex;
   while (0 !== currentIndex) {
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
+    [elements[currentIndex], elements[randomIndex]] = [elements[randomIndex], elements[currentIndex]];
   }
-  return array;
-}
+  return elements;
+};
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
