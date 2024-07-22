@@ -40,6 +40,10 @@ const validateHashtagFormat = (value) => {
   return hashtags.every((element) => regexp.test(element));
 };
 
+const resetValidator = () => {
+  pristine.reset();
+};
+
 pristine.addValidator(hashtag, validateHashtagSpaces, 'Хештеги должны быть разделены пробелами', 6);
 pristine.addValidator(hashtag, validateHashtagLength, 'Не больше 5 хештегов', 4, true);
 pristine.addValidator(hashtag, validateHashtagRepeats, 'Хештеги не должны повторяться', 3, true);
@@ -47,4 +51,4 @@ pristine.addValidator(hashtag, validateHashtagFormat, 'Хештеги должн
 
 const validate = () => pristine.validate();
 
-export { validate };
+export { validate, resetValidator };

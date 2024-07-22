@@ -1,5 +1,5 @@
 import { isEscapeKey } from './util.js';
-import { validate } from './validate-form.js';
+import { resetValidator, validate } from './validate-form.js';
 import { resetEffect } from './effect.js';
 import { resetScale } from './scale.js';
 import { sendData } from './api.js';
@@ -21,6 +21,7 @@ const resetForm = () => {
   uploadForm.reset();
   resetEffect();
   resetScale();
+  resetValidator();
 };
 
 const onDocumentKeydown = (evt) => {

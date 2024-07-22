@@ -1,9 +1,9 @@
 import { openFullPhoto } from './full-photo.js';
 
-const picturesContainer = document.querySelector('.pictures');
+const photosContainer = document.querySelector('.pictures');
 
 const addGalleryListener = (photos) => {
-  picturesContainer.addEventListener('click', (evt) => {
+  photosContainer.addEventListener('click', (evt) => {
     const picture = evt.target.closest('.picture');
 
     if (picture) {

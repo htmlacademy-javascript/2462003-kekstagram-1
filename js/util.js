@@ -10,6 +10,17 @@ const getRandomInteger = (a, b) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
+const shuffle = (elements) => {
+  let currentIndex = elements.length;
+  let randomIndex;
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    [elements[currentIndex], elements[randomIndex]] = [elements[randomIndex], elements[currentIndex]];
+  }
+  return elements;
+};
+
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const formatString = (value) => {
@@ -38,4 +49,12 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {getRandomArrayElement, getRandomInteger, isEscapeKey, formatString, showAlert};
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {getRandomArrayElement, getRandomInteger, isEscapeKey, formatString, showAlert, shuffle, debounce};

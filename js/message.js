@@ -11,9 +11,7 @@ const messageTypeToTemplate = {
 const onDocumentClick = (evt) => {
   const message = document.querySelector('.message');
   const messageButton = document.querySelector('.message__button');
-  if (!message.firstElementChild.contains(evt.target)) {
-    deleteMessage();
-  } if (evt.target === messageButton) {
+  if (!message.firstElementChild.contains(evt.target) || evt.target === messageButton) {
     deleteMessage();
   }
 };
