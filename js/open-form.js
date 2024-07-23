@@ -5,6 +5,8 @@ import { resetScale } from './scale.js';
 import { sendData } from './api.js';
 import { createMessage } from './message.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png', 'webp'];
+
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Публикую...'
@@ -16,6 +18,8 @@ const uploadForm = document.querySelector('.img-upload__form');
 const cancelButton = document.querySelector('.img-upload__cancel');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const submitButton = uploadForm.querySelector('.img-upload__submit');
+const fileChooser = document.querySelector('.img-upload__input');
+const uploadImage = document.querySelector('.preview__image');
 
 const resetForm = () => {
   uploadForm.reset();
@@ -40,11 +44,22 @@ function closePreview () {
   resetForm();
 }
 
+const matchPhoto = () => {
+  const file = fileChooser.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    uploadImage.src = URL.createObjectURL(file);
+  }
+};
+
 const onUploadChange = () => {
   uploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   sliderContainer.classList.add('hidden');
+  matchPhoto();
 };
 
 upload.addEventListener('change', onUploadChange);

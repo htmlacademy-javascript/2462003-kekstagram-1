@@ -1,12 +1,15 @@
 const BASE_URL = 'https://28.javascript.htmlacademy.pro/kekstagram';
+
 const Route = {
   GET_DATA: '/data',
   SEND_DATA: '/',
 };
+
 const Method = {
   GET: 'GET',
   POST: 'POST',
 };
+
 const ErrorText = {
   GET_DATA: 'Не удалось загрузить фотографии',
   SEND_DATA: 'Не удалось отправить форму, попробуйте ещё раз',
