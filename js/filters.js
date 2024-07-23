@@ -36,13 +36,9 @@ const getFilteredPhotos = (photos, filterName) => {
   }
 };
 
-const renderFilteredPhotos = (photos) => {
+const renderFilteredPhotos = debounce((photos) => {
   removePhotos();
   renderPhotos(photos);
-};
-
-const getDebouncedPhotos = debounce((photos, target) => {
-  renderFilteredPhotos(getFilteredPhotos(photos, target));
 }, RERENDER_DELAY);
 
 const initFilters = (photos) => {
@@ -51,7 +47,7 @@ const initFilters = (photos) => {
     if (evt.target.classList.contains('img-filters__button')) {
       removeActiveClass();
       evt.target.classList.add('img-filters__button--active');
-      getDebouncedPhotos(photos, evt.target.id);
+      renderFilteredPhotos(getFilteredPhotos(photos, evt.target.id));
     }
   });
 };
