@@ -8,8 +8,6 @@ const getRandomInteger = (a, b) => {
   return result;
 };
 
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
 const shuffle = (elements) => {
   let currentIndex = elements.length;
   let randomIndex;
@@ -57,4 +55,4 @@ const debounce = (callback, timeoutDelay) => {
   };
 };
 
-export {getRandomArrayElement, getRandomInteger, isEscapeKey, formatString, showAlert, shuffle, debounce};
+export {getRandomInteger, isEscapeKey, formatString, showAlert, shuffle, debounce};
