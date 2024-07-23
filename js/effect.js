@@ -1,9 +1,3 @@
-const effectsContainer = document.querySelector('.effects__list');
-const uploadImage = document.querySelector('.img-upload__preview img');
-const sliderContainer = document.querySelector('.img-upload__effect-level');
-const slider = sliderContainer.querySelector('.effect-level__slider');
-const sliderValue = sliderContainer.querySelector('.effect-level__value');
-
 const Effect = {
   NONE: 'none',
   CHROME: 'chrome',
@@ -11,15 +5,6 @@ const Effect = {
   MARVIN: 'marvin',
   PHOBOS: 'phobos',
   HEAT: 'heat',
-};
-
-const effectToFilterName = {
-  [Effect.NONE]: 'none',
-  [Effect.CHROME]: 'grayscale',
-  [Effect.SEPIA]: 'sepia',
-  [Effect.MARVIN]: 'invert',
-  [Effect.PHOBOS]: 'blur',
-  [Effect.HEAT]: 'brightness',
 };
 
 const EFFECT_CONFIG = {
@@ -72,6 +57,21 @@ const EFFECT_CONFIG = {
     step: 0.1,
   },
 };
+
+const effectToFilterName = {
+  [Effect.NONE]: 'none',
+  [Effect.CHROME]: 'grayscale',
+  [Effect.SEPIA]: 'sepia',
+  [Effect.MARVIN]: 'invert',
+  [Effect.PHOBOS]: 'blur',
+  [Effect.HEAT]: 'brightness',
+};
+
+const effectsContainer = document.querySelector('.effects__list');
+const uploadImage = document.querySelector('.img-upload__preview img');
+const sliderContainer = document.querySelector('.img-upload__effect-level');
+const slider = sliderContainer.querySelector('.effect-level__slider');
+const sliderValue = sliderContainer.querySelector('.effect-level__value');
 
 noUiSlider.create(slider,
   {...EFFECT_CONFIG[Effect.NONE],
