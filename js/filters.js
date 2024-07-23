@@ -36,20 +36,20 @@ const getFilteredPhotos = (photos, filterName) => {
   }
 };
 
-const renderFilteredPhotos = (photos) => {
+const renderFilteredPhotos = debounce((photos) => {
   removePhotos();
   renderPhotos(photos);
-};
+}, RERENDER_DELAY);
 
 const initFilters = (photos) => {
   filter.classList.remove('img-filters--inactive');
-  filterForm.addEventListener('click', debounce((evt) => {
+  filterForm.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('img-filters__button')) {
       removeActiveClass();
       evt.target.classList.add('img-filters__button--active');
       renderFilteredPhotos(getFilteredPhotos(photos, evt.target.id));
     }
-  }, RERENDER_DELAY));
+  });
 };
 
 export { initFilters };

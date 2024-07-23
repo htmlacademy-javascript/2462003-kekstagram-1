@@ -58,7 +58,7 @@ const renderComments = () => {
   });
 
   commentsContainer.appendChild(fragment);
-  commentCount.innerHTML = `${endCommentIndex} из ${comments.length} комментариев`;
+  commentCount.innerHTML = `${endCommentIndex} из <span class="comments-count">${comments.length}</span> комментариев`;
 };
 
 const matchFullPhoto = (photo) => {
