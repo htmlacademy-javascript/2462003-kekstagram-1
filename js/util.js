@@ -1,13 +1,5 @@
 const ALERT_SHOW_TIME = 5000;
 
-// Случайное число в диапозоне
-const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.trunc(Math.random() * (upper - lower + 1) + lower);
-  return result;
-};
-
 const shuffle = (elements) => {
   let currentIndex = elements.length;
   let randomIndex;
@@ -55,4 +47,4 @@ const debounce = (callback, timeoutDelay) => {
   };
 };
 
-export {getRandomInteger, isEscapeKey, formatString, showAlert, shuffle, debounce};
+export {isEscapeKey, formatString, showAlert, shuffle, debounce};
