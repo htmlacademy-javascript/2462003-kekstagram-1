@@ -12,6 +12,7 @@ const bigImage = bigImageContainer.querySelector('img');
 const likesCount = fullPhoto.querySelector('.likes-count');
 const socialCaption = fullPhoto.querySelector('.social__caption');
 const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
+
 let startCommentIndex = 0;
 let endCommentIndex = DEFAULT_COMMENT_AMOUNT;
 let comments = [];
