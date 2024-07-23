@@ -98,7 +98,7 @@ const setUserFormSubmit = (onSuccess) => {
         .catch(() => {
           createMessage('error');
         })
-        .finally(unblockSubmitButton());
+        .finally(unblockSubmitButton);
     }
   });
 };
