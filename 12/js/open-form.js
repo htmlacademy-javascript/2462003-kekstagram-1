@@ -20,6 +20,7 @@ const sliderContainer = document.querySelector('.img-upload__effect-level');
 const submitButton = uploadForm.querySelector('.img-upload__submit');
 const fileChooser = document.querySelector('.img-upload__input');
 const uploadImage = document.querySelector('.preview__image');
+const previewsList = document.querySelectorAll('.effects__preview');
 
 const resetForm = () => {
   uploadForm.reset();
@@ -51,6 +52,9 @@ const matchPhoto = () => {
 
   if (matches) {
     uploadImage.src = URL.createObjectURL(file);
+    previewsList.forEach((preview) => {
+      preview.style = `background-image: url('${URL.createObjectURL(file)}')`;
+    });
   }
 };
 
